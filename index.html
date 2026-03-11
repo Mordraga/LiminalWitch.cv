@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A small portfolio site for the person behind the character Mordraga, a liminal witch VTuber archetype.">
+    <title>Liminal Witch Portfolio</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preload" as="font" type="font/ttf" crossorigin
+      href="https://raw.githubusercontent.com/Mordraga/BarazhadHost/main/Terminal/Modeseven-L3n5.ttf">
+
+</head>
+<body>
+    <main class="screen">
+        <section class="terminalPage">
+            <h1>Welcome to LiminalWitch.CV</h1>
+            <p>
+                Welcome to LiminalWitch.cv. To begin please type
+                <codeblock data-command="enter">enter</codeblock>.
+                If you prefer a more traditional UI, please type
+                <codeblock data-command="ui please">UI Please</codeblock>.
+            </p>
+            <div id="terminalLog" class="terminalLog" aria-live="polite"></div>
+        </section>
+
+        <div id="terminalPrompt" class="input-button-wrapper">
+            <span class="sr-only">Input command</span>
+            <span class="prompt">&gt;</span>
+            <div id="inputShell" class="inputShell" role="textbox" aria-label="Input command" tabindex="0">
+                <span id="promptText" class="promptText promptText--placeholder">Input Command</span>
+                <span class="cursor" aria-hidden="true"></span>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
