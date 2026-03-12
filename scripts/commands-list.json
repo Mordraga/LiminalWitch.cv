@@ -1,0 +1,77 @@
+{
+  "commands": [
+    {
+      "name": "help",
+      "aliases": ["help", "?"],
+      "usage": "help",
+      "description": "Show available commands."
+    },
+    {
+      "name": "clear",
+      "aliases": ["clear"],
+      "usage": "clear",
+      "description": "Clear the terminal output."
+    },
+    {
+      "name": "enter",
+      "aliases": ["enter"],
+      "usage": "enter",
+      "description": "Boot the portfolio terminal."
+    },
+    {
+      "name": "begin",
+      "aliases": ["begin"],
+      "usage": "begin",
+      "description": "Alias for enter."
+    },
+    {
+      "name": "pwd",
+      "aliases": ["pwd"],
+      "usage": "pwd",
+      "description": "Print the current path."
+    },
+    {
+      "name": "ls",
+      "aliases": ["ls", "dir"],
+      "usage": "ls [path]",
+      "description": "List entries at current path or target path."
+    },
+    {
+      "name": "cd",
+      "aliases": ["cd"],
+      "usage": "cd <path>",
+      "description": "Change current directory."
+    },
+    {
+      "name": "back",
+      "aliases": ["back"],
+      "usage": "back",
+      "description": "Go up one directory (same as cd ..)."
+    },
+    {
+      "name": "open",
+      "aliases": ["open", "cat"],
+      "usage": "open [path]",
+      "description": "Open a path. Links launch in a new tab."
+    },
+    {
+      "name": "contact",
+      "aliases": ["contact"],
+      "usage": "contact",
+      "description": "Open Ko-fi DMs."
+    },
+    {
+      "name": "test",
+      "aliases": ["test"],
+      "usage": "test",
+      "description": "Run the test response."
+    },
+    {
+      "name": "credit",
+      "aliases": ["credit"],
+      "usage": "credit",
+      "description": "Run credit dev info."
+    }
+    
+  ]
+}

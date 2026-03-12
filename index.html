@@ -12,15 +12,19 @@
 </head>
 <body>
     <main class="screen">
-        <section class="terminalPage">
+        <section id="terminalLog" class="terminalPage terminalLog" aria-live="polite">
             <h1>Welcome to LiminalWitch.CV</h1>
             <p>
-                Welcome to LiminalWitch.cv. To begin please type
-                <codeblock data-command="enter">enter</codeblock>.
-                If you prefer a more traditional UI, please type
-                <codeblock data-command="ui please">UI Please</codeblock>.
+                If you prefer a standard UI experience, all folders are
+                clickable so you don't need to type <codeblock>cd &lt;argument&gt;</codeblock>
+                to navigate. But where's the fun in that. &lt;3
             </p>
-            <div id="terminalLog" class="terminalLog" aria-live="polite"></div>
+                
+            <p>Type <codeblock data-command="enter">enter</codeblock>. or 
+               <codeblock data-command="begin">begin</codeblock> to begin.
+            </p>
+
+            <p>Type <codeblock data-command="help">help</codeblock> for a list of commands.</p>
         </section>
 
         <div id="terminalPrompt" class="input-button-wrapper">

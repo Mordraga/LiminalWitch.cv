@@ -25,15 +25,19 @@
 body {
     margin: 0;
     min-height: 100vh;
-    padding: 1rem;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
     background: var(--background);
     color: var(--main-color);
     font-family: "Modeseven-L3n5", monospace;
+    font-size: clamp(1rem, 1.1vw, 1.25rem);
 }
 
 .screen {
-    width: min(100%, 96rem);
-    min-height: calc(100vh - 2rem);
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
     border: 2px solid var(--border);
     background: var(--panel);
     display: grid;
@@ -42,8 +46,8 @@ body {
 
 .terminalPage {
     margin: 0;
-    padding: 1.25rem;
-    line-height: 1.5;
+    padding: clamp(1rem, 2vw, 2rem);
+    line-height: 1.65;
     overflow-y: auto;
 }
 
@@ -64,7 +68,8 @@ h1 {
 
 p {
     margin: 0;
-    max-width: 72ch;
+    max-width: 100ch;
+    margin-top: 15px;
 }
 
 codeblock {
@@ -83,25 +88,64 @@ codeblock:hover {
 }
 
 .terminalLog {
-    margin-top: 1rem;
-    max-height: 30vh;
-    overflow-y: auto;
+    margin-top: 0;
 }
 
 .terminalLog p {
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.5rem;
+    max-width: none;
+}
+
+@keyframes terminalTyping {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.terminalLog .terminalLine--typing {
+    clip-path: inset(0 100% 0 0);
+    animation: terminalTyping var(--typing-duration, 420ms) steps(var(--typing-steps, 24), end) forwards;
 }
 
 .terminalLog .echo {
     color: var(--muted);
 }
 
+
+.terminalToken {
+    display: inline-block;
+    font: inherit;
+    color: var(--access-font);
+    background: var(--main-color);
+    border: 1px solid var(--token-border);
+    padding: 0.05em 0.28em;
+    margin: 0 0.12em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 200ms ease, background-color 200ms ease;
+}
+
+.terminalToken:hover,
+.terminalToken:focus-visible {
+    background: #ff78ff;
+    transform: scale(1.08);
+    outline: none;
+}
+
+.terminalToken--path {
+    appearance: none;
+}
+
 .input-button-wrapper {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    min-height: 3rem;
-    padding: 0.6rem 1rem;
+    min-height: 3.5rem;
+    padding: 0.7rem 1.25rem;
     border-top: 2px solid var(--border);
 }
 
@@ -114,7 +158,7 @@ codeblock:hover {
     align-items: center;
     gap: 0;
     min-width: 12ch;
-    max-width: 56ch;
+    max-width: 86ch;
     width: 12ch;
     outline: none;
     cursor: text;
@@ -167,4 +211,18 @@ codeblock:hover {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 1rem;
+    }
+
+    .terminalPage {
+        padding: 1rem;
+    }
+
+    .input-button-wrapper {
+        padding: 0.65rem 0.9rem;
+    }
 }
