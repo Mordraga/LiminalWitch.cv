@@ -4,7 +4,13 @@
       "path": "/",
       "kind": "dir",
       "description": "Root directory for the portfolio terminal.",
-      "children": ["/about-vtubing", "/about-pro", "/projects", "/contact"]
+      "children": [
+        "/about-vtubing",
+        "/about-pro",
+        "/projects",
+        "/contact",
+        "/social-links"
+      ]
     },
     {
       "path": "/about-pro",
@@ -117,6 +123,48 @@
       "kind": "link",
       "description": "Open Ko-fi DMs.",
       "url": "https://ko-fi.com/"
+    },
+    {
+      "path": "/social-links",
+      "kind": "dir",
+      "description": "Personal social links.",
+      "children": [
+        "/social-links/twitch",
+        "/social-links/youtube",
+        "/social-links/x",
+        "/social-links/throne",
+        "/social-links/ko-fi"
+      ]
+    },
+    {
+      "path": "/social-links/twitch",
+      "kind": "link",
+      "description": "Twitch channel",
+      "url": "https://twitch.tv/mordraga0"
+    },
+    {
+      "path": "/social-links/youtube",
+      "kind": "link",
+      "description": "YouTube channel",
+      "url": "https://youtube.com/mordraga0"
+    },
+    {
+      "path": "/social-links/x",
+      "kind": "link",
+      "description": "X profile",
+      "url": "https://x.com/mordraga0"
+    },
+    {
+      "path": "/social-links/throne",
+      "kind": "link",
+      "description": "Throne wishlist",
+      "url": "https://throne.com/mordraga0"
+    },
+    {
+      "path": "/social-links/ko-fi",
+      "kind": "link",
+      "description": "Ko-fi profile",
+      "url": "https://ko-fi.com/mordraga"
     },
 
     {
