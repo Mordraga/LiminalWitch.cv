@@ -249,6 +249,7 @@ codeblock:hover {
 }
 
 .inputShell {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0;
@@ -264,15 +265,30 @@ codeblock:hover {
 }
 
 .keyboardCapture {
-    position: fixed;
-    left: -10000px;
-    top: -10000px;
-    width: 1px;
-    height: 1px;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
     border: 0;
     padding: 0;
+    margin: 0;
+    background: transparent;
+    color: transparent;
+    caret-color: transparent;
+    font: inherit;
+    z-index: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-text-fill-color: transparent;
+}
+
+.promptText,
+.cursor {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .promptText {

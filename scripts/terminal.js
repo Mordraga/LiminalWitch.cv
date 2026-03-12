@@ -449,12 +449,11 @@ function handleTyping(event) {
         return;
     }
 
-    if (event.key.length !== 1 || event.ctrlKey || event.metaKey || event.altKey) {
+    // Let printable characters flow through the native input event.
+    // This avoids double-entry on mobile keyboards that fire both keydown + input.
+    if (event.ctrlKey || event.metaKey || event.altKey) {
         return;
     }
-
-    event.preventDefault();
-    appendCommandText(event.key);
 }
 
 async function initializeTerminal() {
