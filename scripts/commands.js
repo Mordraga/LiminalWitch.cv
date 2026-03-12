@@ -12,7 +12,10 @@ const fallbackCommands = [
     { name: "open", aliases: ["open", "cat"], usage: "open [path]", description: "Open a path. Links launch in a new tab." },
     { name: "contact", aliases: ["contact"], usage: "contact", description: "Open Ko-fi DMs." },
     { name: "test", aliases: ["test"], usage: "test", description: "Run the test response." },
-    { name: "ping", aliases: ["ping"], usage: "ping", description: "Ping Pong toast."}
+    { name: "ping", aliases: ["ping"], usage: "ping", description: "Ping Pong toast." },
+    { name: "pong", aliases: ["pong"], usage: "pong", description: "Pong Ping toast." },
+    { name: "on_the_rocks", aliases: ["on the rocks", "on_the_rocks"], usage: "on_the_rocks", description: "Stay classy." },
+    { name: "what_say_you", aliases: ["what say you", "what_say_you"], usage: "what_say_you", description: "Hidden phrase.", hidden: true }
 ];
 
 function normalizeCommand(value) {
@@ -42,7 +45,8 @@ function buildCommandCatalog(entries) {
             name,
             aliases: [...aliases],
             usage: String(entry?.usage ?? name).trim(),
-            description: String(entry?.description ?? "").trim()
+            description: String(entry?.description ?? "").trim(),
+            hidden: Boolean(entry?.hidden)
         };
 
         commands.push(command);
@@ -111,10 +115,13 @@ export function parseCommandInput(input, catalog) {
 
 export function formatCommandHelp(catalog) {
     return catalog.commands
+        .filter((command) => !command.hidden)
         .map((command) => `${command.usage}: ${command.description}`)
         .join(" | ");
 }
 
 export function formatCommandHelpLines(catalog) {
-    return catalog.commands.map((command) => `${command.usage} - ${command.description}`);
+    return catalog.commands
+        .filter((command) => !command.hidden)
+        .map((command) => `${command.usage} - ${command.description}`);
 }

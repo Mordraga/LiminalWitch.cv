@@ -35,8 +35,6 @@ body {
 }
 
 .screen {
-    position: relative;
-    isolation: isolate;
     width: 100%;
     min-height: 100vh;
     height: 100vh;
@@ -46,28 +44,37 @@ body {
     grid-template-rows: 1fr auto;
 }
 
-.screen::before {
+.terminalPage {
+    position: relative;
+    isolation: isolate;
+    margin: 0;
+    padding: clamp(1rem, 2vw, 2rem);
+    line-height: 1.65;
+    overflow-y: auto;
+}
+
+.terminalPage::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 3;
+    z-index: 2;
     opacity: 0.14;
     background:
         repeating-linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0.16) 0 1px,
             rgba(0, 0, 0, 0) 1px 3px
-        );
+    );
     animation: scanlineDrift 10s linear infinite;
 }
 
-.screen::after {
+.terminalPage::after {
     content: "";
     position: absolute;
     inset: -100% 0 100% 0;
     pointer-events: none;
-    z-index: 4;
+    z-index: 3;
     opacity: 0.18;
     background: linear-gradient(
         to bottom,
@@ -78,16 +85,9 @@ body {
     animation: crtSweep 7s linear infinite;
 }
 
-.screen > * {
+.terminalPage > * {
     position: relative;
     z-index: 1;
-}
-
-.terminalPage {
-    margin: 0;
-    padding: clamp(1rem, 2vw, 2rem);
-    line-height: 1.65;
-    overflow-y: auto;
 }
 
 h1,
@@ -397,15 +397,26 @@ codeblock:hover {
 
 @media (max-width: 768px) {
     body {
-        font-size: 1rem;
+        font-size: 0.92rem;
     }
 
     .terminalPage {
-        padding: 1rem;
+        padding: 0.75rem;
+        line-height: 1.5;
+    }
+
+    .terminalLog p {
+        margin: 0 0 0.42rem;
     }
 
     .input-button-wrapper {
-        padding: 0.65rem 0.9rem;
+        min-height: 3.1rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .inputShell {
+        min-width: 10ch;
+        max-width: 74ch;
     }
 
     .toastStack {

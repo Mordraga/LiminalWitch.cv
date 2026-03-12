@@ -88,7 +88,15 @@
       "name": "on_the_rocks",
       "aliases": ["on the rocks", "on_the_rocks"],
       "usage": "on_the_rocks",
-      "description": "Stay Classy."
+      "description": "Stay Classy.",
+      "hidden": true
+    },
+    {
+      "name": "what_say_you",
+      "aliases": ["what say you", "what_say_you"],
+      "usage": "what_say_you",
+      "description": "Hidden phrase.",
+      "hidden": true
     }
   ]
 }
