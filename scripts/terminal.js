@@ -337,6 +337,15 @@ function runCommand(raw) {
 
     const parsed = parseCommandInput(trimmedInput, commandCatalog);
     if (!parsed) {
+        // Hidden/easter-egg fallback: route by handler key even if command catalog is stale.
+        const fallbackKey = trimmedInput.toLowerCase().replace(/\s+/g, "_");
+        const fallbackHandler = commandHandlers[fallbackKey];
+        if (typeof fallbackHandler === "function") {
+            trackEvent("command_run", { command: fallbackKey, source: "handler_fallback" });
+            fallbackHandler("");
+            return;
+        }
+
         writeLog(`Unknown command: ${trimmedInput.toLowerCase()}. Type 'help'.`);
         trackEvent("command_unknown", { input: trimmedInput.split(/\s+/)[0]?.toLowerCase() || "unknown" });
         return;

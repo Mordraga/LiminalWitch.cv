@@ -66,7 +66,7 @@ export const defaultCommandCatalog = buildCommandCatalog(fallbackCommands);
 
 export async function loadCommandCatalog() {
     try {
-        const response = await fetch(commandsUrl);
+        const response = await fetch(commandsUrl, { cache: "no-store" });
         if (!response.ok) {
             return defaultCommandCatalog;
         }
