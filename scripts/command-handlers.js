@@ -175,7 +175,7 @@ export function createCommandHandlers(context) {
             context.writeLog("Hell is empty, and all the devils are here. -Shakespear")
             context.showToast("Hell is empty, and all the devils are here. -Shakespear")
         },
-        Mordraga() {
+        mordraga() {
             const GK0312_DOSSIER = String.raw`
                 Known Aliases: Mordraga, Mordraga0, Vanni, Vannesa, ██████, ████████████, and ████.
                 Classification: Persistent liminal entity
@@ -218,6 +218,5 @@ export function createCommandHandlers(context) {
                 }
             context.showToast("GK-0312 loaded.");
         }
-
     };
 }

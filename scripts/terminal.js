@@ -327,6 +327,43 @@ const commandHandlers = createCommandHandlers({
     }
 });
 
+function buildHandlerKeyCandidates(value) {
+    const raw = String(value ?? "").trim().toLowerCase();
+    if (!raw) {
+        return [];
+    }
+
+    return [
+        raw,
+        raw.replace(/\s+/g, "_"),
+        raw.replace(/-/g, "_"),
+        raw.replace(/[\s_-]+/g, "_")
+    ];
+}
+
+function resolveHandler(command) {
+    const keys = new Set();
+
+    for (const candidate of buildHandlerKeyCandidates(command?.name)) {
+        keys.add(candidate);
+    }
+
+    for (const alias of command?.aliases ?? []) {
+        for (const candidate of buildHandlerKeyCandidates(alias)) {
+            keys.add(candidate);
+        }
+    }
+
+    for (const key of keys) {
+        const handler = commandHandlers[key];
+        if (typeof handler === "function") {
+            return { handler, key };
+        }
+    }
+
+    return null;
+}
+
 function runCommand(raw) {
     const trimmedInput = raw.trim();
     if (!trimmedInput) {
@@ -352,15 +389,15 @@ function runCommand(raw) {
     }
 
     const { command, args } = parsed;
-    const handler = commandHandlers[command.name];
-    if (!handler) {
+    const resolvedHandler = resolveHandler(command);
+    if (!resolvedHandler) {
         writeLog(`Command '${command.name}' is configured but not implemented.`);
         trackEvent("command_unimplemented", { command: command.name });
         return;
     }
 
-    trackEvent("command_run", { command: command.name });
-    handler(args);
+    trackEvent("command_run", { command: resolvedHandler.key || command.name });
+    resolvedHandler.handler(args);
 }
 
 function submitBuffer() {
