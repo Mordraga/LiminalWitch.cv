@@ -97,6 +97,12 @@
       "usage": "what_say_you",
       "description": "Hidden phrase.",
       "hidden": true
+    },
+    {
+      "name": "Mordraga",
+      "aliases": ["mordraga", "Mordraga", "MRD-0"],
+      "description": "Hidden Lore Dump",
+      "hidden": true
     }
   ]
 }

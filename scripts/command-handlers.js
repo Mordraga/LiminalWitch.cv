@@ -157,7 +157,7 @@ export function createCommandHandlers(context) {
             context.showToast("What are you testing? WHY are you testing?");
         },
         credit() {
-            context.writeLog("Website designed and developed by Mordraga. ©2026");
+            context.showToast("Website designed and developed by Mordraga. ©2026");
         },
         ping() {
             context.writeLog("Pong. <3")
@@ -209,8 +209,7 @@ export function createCommandHandlers(context) {
                 Will’o the Wisps: claiming to be Rubert.
                 Mai LLM a.i.
                 Selyros LLM a.i. “Daughter”
-                `.trim();
-
+            `.trim();
             context.writeLog("What you want lore from me? Fine. Here:")
             context.writeLog("")
             context.showToast("Enjoy the lore dump. <3")
