@@ -1,12 +1,4 @@
 import { formatCommandHelpLines } from "./commands.js";
-import {
-    formatEntryLabel,
-    formatPathLabel,
-    getEntry,
-    listChildren,
-    resolveExistingPath,
-    resolvePathForCd
-} from "./portfolio-fs.js";
 
 function pathPart(path, label = path) {
     return { type: "path", path, label };
@@ -16,56 +8,61 @@ function urlPart(href, label = href) {
     return { type: "link", href, label };
 }
 
-function renderDirectory(path, writeRichLog, writeLog) {
-    const children = listChildren(path);
+function renderDirectory(path, context) {
+    const children = context.fs.listChildren(path);
     if (children.length === 0) {
-        writeLog("Directory is empty.");
+        context.writeLog("Directory is empty.");
         return;
     }
 
     const output = ["Contents: "];
     children.forEach((child, index) => {
-        output.push(pathPart(child.path, formatEntryLabel(child)));
+        if (child.kind === "link" && child.url) {
+            output.push(urlPart(child.url, context.fs.formatEntryLabel(child)));
+        } else {
+            output.push(pathPart(child.path, context.fs.formatEntryLabel(child)));
+        }
+
         if (index < children.length - 1) {
             output.push(" ");
         }
     });
 
-    writeRichLog(output);
+    context.writeRichLog(output);
 }
 
 function changeDirectory(rawTarget, context) {
-    const resolvedPath = resolvePathForCd(rawTarget, context.getCurrentPath());
+    const resolvedPath = context.fs.resolvePathForCd(rawTarget, context.fs.getCurrentPath());
     if (!resolvedPath) {
         context.writeLog(`Path not found: ${rawTarget}`);
         return;
     }
 
-    const entry = getEntry(resolvedPath);
+    const entry = context.fs.getEntry(resolvedPath);
     if (!entry || entry.kind !== "dir") {
         context.writeLog(`Not a directory: ${resolvedPath}`);
         return;
     }
 
-    context.setCurrentPath(resolvedPath);
+    context.fs.setCurrentPath(resolvedPath);
     context.writeRichLog(["Now at ", pathPart(resolvedPath), "."]);
-    renderDirectory(resolvedPath, context.writeRichLog, context.writeLog);
+    renderDirectory(resolvedPath, context);
 }
 
 function openPortfolioPath(targetPath, context, options = {}) {
     const { announce = true } = options;
-    const entry = getEntry(targetPath);
+    const entry = context.fs.getEntry(targetPath);
     if (!entry) {
         context.writeLog(`Path not found: ${targetPath}`);
         return;
     }
 
     if (entry.kind === "dir") {
-        context.setCurrentPath(targetPath);
+        context.fs.setCurrentPath(targetPath);
         if (announce) {
             context.writeRichLog(["Now at ", pathPart(targetPath), "."]);
         }
-        renderDirectory(targetPath, context.writeRichLog, context.writeLog);
+        renderDirectory(targetPath, context);
         return;
     }
 
@@ -78,12 +75,20 @@ function openPortfolioPath(targetPath, context, options = {}) {
     }
 
     if (entry.kind === "link") {
-        context.writeRichLog(["Opening external link: ", urlPart(entry.url, formatPathLabel(targetPath)), "."]);
+        context.writeRichLog([
+            "External link requested: ",
+            urlPart(entry.url, context.fs.formatPathLabel(targetPath)),
+            "."
+        ]);
         context.openExternal(entry.url);
     }
 }
 
 export function createCommandHandlers(context) {
+    if (!context?.fs) {
+        throw new Error("createCommandHandlers requires context.fs");
+    }
+
     return {
         help() {
             context.writeLog("Available commands:");
@@ -104,17 +109,17 @@ export function createCommandHandlers(context) {
             openPortfolioPath("/", context, { announce: false });
         },
         pwd() {
-            context.writeLog(context.getCurrentPath());
+            context.writeLog(context.fs.getCurrentPath());
         },
         ls(args) {
-            const lookupPath = args || context.getCurrentPath();
-            const resolvedPath = resolveExistingPath(lookupPath, context.getCurrentPath());
+            const lookupPath = args || context.fs.getCurrentPath();
+            const resolvedPath = context.fs.resolveExistingPath(lookupPath, context.fs.getCurrentPath());
             if (!resolvedPath) {
                 context.writeLog(`Path not found: ${lookupPath}`);
                 return;
             }
 
-            const entry = getEntry(resolvedPath);
+            const entry = context.fs.getEntry(resolvedPath);
             if (!entry) {
                 context.writeLog(`Path not found: ${lookupPath}`);
                 return;
@@ -125,7 +130,7 @@ export function createCommandHandlers(context) {
                 return;
             }
 
-            renderDirectory(resolvedPath, context.writeRichLog, context.writeLog);
+            renderDirectory(resolvedPath, context);
         },
         cd(args) {
             const rawTarget = args || "/";
@@ -135,8 +140,8 @@ export function createCommandHandlers(context) {
             changeDirectory("..", context);
         },
         open(args) {
-            const targetInput = args || context.getCurrentPath();
-            const resolvedPath = resolveExistingPath(targetInput, context.getCurrentPath());
+            const targetInput = args || context.fs.getCurrentPath();
+            const resolvedPath = context.fs.resolveExistingPath(targetInput, context.fs.getCurrentPath());
             if (!resolvedPath) {
                 context.writeLog(`Path not found: ${targetInput}`);
                 return;
@@ -149,9 +154,19 @@ export function createCommandHandlers(context) {
         },
         test() {
             context.writeLog("What are you testing? WHY are you testing?");
+            context.showToast("What are you testing? WHY are you testing?");
         },
         credit() {
-            context.writeLog("Webside designed and developed by Mordraga. ©2026")
+            context.writeLog("Website designed and developed by Mordraga. ©2026");
+        },
+        ping() {
+            context.writeLog("Pong. <3")
+            context.showToast("Pong. <3")
+        },
+        on_the_rocks() {
+            context.writeLog("Stay Classy.")
+            context.showToast("Stay Classy. 🍸")
         }
+
     };
 }

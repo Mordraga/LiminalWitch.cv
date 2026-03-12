@@ -140,6 +140,67 @@ codeblock:hover {
     appearance: none;
 }
 
+.redirectToast {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 30;
+    width: min(32rem, calc(100vw - 2rem));
+    border: 2px solid var(--token-border);
+    background: rgba(5, 5, 7, 0.96);
+    color: var(--main-color);
+    padding: 0.9rem 1rem;
+    box-shadow: 0 0 0 1px rgba(221, 70, 238, 0.15), 0 18px 30px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.redirectToast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.redirectToast__message {
+    margin: 0;
+}
+
+.redirectToast__destination {
+    margin: 0.25rem 0 0.75rem;
+    color: var(--muted);
+}
+
+.redirectToast__actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.redirectToast__button {
+    border: 1px solid var(--token-border);
+    background: var(--main-color);
+    color: var(--access-font);
+    font: inherit;
+    line-height: 1;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+}
+
+.redirectToast__button:hover,
+.redirectToast__button:focus-visible {
+    background: #ff78ff;
+    outline: none;
+}
+
+.redirectToast__button--subtle {
+    background: transparent;
+    color: var(--main-color);
+}
+
+.redirectToast__button--subtle:hover,
+.redirectToast__button--subtle:focus-visible {
+    background: rgba(221, 70, 238, 0.2);
+}
+
 .input-button-wrapper {
     display: flex;
     align-items: center;
@@ -224,5 +285,11 @@ codeblock:hover {
 
     .input-button-wrapper {
         padding: 0.65rem 0.9rem;
+    }
+
+    .redirectToast {
+        right: 0.6rem;
+        bottom: 0.6rem;
+        width: calc(100vw - 1.2rem);
     }
 }

@@ -11,8 +11,8 @@ const fallbackCommands = [
     { name: "back", aliases: ["back"], usage: "back", description: "Go up one directory (same as cd ..)." },
     { name: "open", aliases: ["open", "cat"], usage: "open [path]", description: "Open a path. Links launch in a new tab." },
     { name: "contact", aliases: ["contact"], usage: "contact", description: "Open Ko-fi DMs." },
-    { name: "ui please", aliases: ["ui please", "ui"], usage: "ui please", description: "Mode-switch alias. Terminal is already the UI." },
-    { name: "test", aliases: ["test"], usage: "test", description: "Run the test response." }
+    { name: "test", aliases: ["test"], usage: "test", description: "Run the test response." },
+    { name: "ping", aliases: ["ping"], usage: "ping", description: "Ping Pong toast."}
 ];
 
 function normalizeCommand(value) {

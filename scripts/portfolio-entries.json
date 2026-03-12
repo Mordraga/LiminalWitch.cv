@@ -1,0 +1,122 @@
+{
+  "entries": [
+    {
+      "path": "/",
+      "kind": "dir",
+      "description": "Root directory for the portfolio terminal.",
+      "children": ["/about-vtubing", "/about-pro", "/projects", "/contact"]
+    },
+    {
+      "path": "/about-pro",
+      "kind": "file",
+      "description": "About me but make it professional. Bleh.",
+      "lines": [
+        "Mordraga (alias)",
+        "Software Developer",
+        "Focus",
+        "AI Tooling, Automation Systems, Website Development",
+        "",
+        "Languages:",
+        "Rust, Python, JS/HTML/CSS"
+      ]
+    },
+    {
+      "path": "/about-vtubing",
+      "kind": "file",
+      "description": "About me profile.",
+      "lines": [
+        "Mordraga | Eldritch Horror Vtuber",
+        "Hello! I'm Mordraga or as some may know me, MRD-0. Your wonderful 'eldritch goddess' or whatever. I make",
+        "cool things like this webside, AI tools and other interesting things."
+      ]
+    },
+    {
+      "path": "/about-saryn",
+      "kind": "file",
+      "description": "Legal about me",
+      "lines": [
+        "Hello! I am Saryn, the voice and creator of Mordraga, this site, and all of 'Mordraga's' little toys and",
+        "creations.",
+        "",
+        "Title:",
+        "Software Developer | Vtuber",
+        "Focus",
+        "AI Tooling, Automation Systems, Website Development",
+        "",
+        "Languages:",
+        "Rust, Python, JS/HTML/CSS"
+      ]
+    },
+    {
+      "path": "/projects",
+      "kind": "dir",
+      "description": "Selected work and experiments.",
+      "children": ["/websites", "/ai-work", "/worldbuilding-notes"]
+    },
+    {
+      "path": "/websites",
+      "kind": "dir",
+      "description": "Selected websites to show",
+      "children": ["/websites/liminal-witch.cv", "/websites/mootskeeper.com"]
+    },
+    {
+      "path": "/websites/liminal-witch.cv",
+      "kind": "link",
+      "description": "Terminal-first portfolio interface.",
+      "url": "https://liminalwitch.cv"
+    },
+    {
+      "path": "/websites/mootskeeper.com",
+      "kind": "link",
+      "description": "CRM website",
+      "url": "https://mootskeeper.com"
+    },
+    {
+      "path": "/worldbuilding-notes",
+      "kind": "file",
+      "description": "Lore and writing sandbox.",
+      "lines": [
+        "Couple of my current projects can fit under here such as my Vtubing itself being the biggest example.",
+        "But another example I can think of are 'Polaris', a speculative biology TTRPG with DND inspired mechanics"
+      ]
+    },
+    {
+      "path": "/ai-work",
+      "kind": "dir",
+      "description": "AI Tools and agents I have made.",
+      "children": ["/ai-work/Mai", "/ai-work/Selyros"]
+    },
+    {
+      "path": "/ai-work/Mai",
+      "kind": "file",
+      "description": "Flirt LLM running off of Python and Openrouter",
+      "lines": [
+        "AI prompt system to generate flirty content for my Vtubing streams",
+        "Runs off of Openrouter for a modular model system controlled in a UI",
+        "Designed with twitch-safety in mind and user opt-in in mind.",
+        "",
+        "Stack:",
+        "Pure Python with mild JSON"
+      ]
+    },
+    {
+      "path": "/ai-work/Selyros",
+      "kind": "file",
+      "description": "AI Model designed to operate around IFS systems",
+      "lines": [
+        "AI prompt system designed around IFS parts theory to simulate multiple parts such as Managers, Firefighters and Exiles",
+        "Runs off of Gemma3 hosted locally via Ollama.",
+        "Designed with trauma awareness in mind",
+        "",
+        "Stack:",
+        "Pure Python with mild JSON"
+      ]
+    },
+    {
+      "path": "/contact",
+      "kind": "link",
+      "description": "Open Ko-fi DMs.",
+      "url": "https://ko-fi.com/"
+    }
+  ]
+}

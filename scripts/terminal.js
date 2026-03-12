@@ -1,5 +1,6 @@
 import { createCommandHandlers } from "./command-handlers.js";
 import { defaultCommandCatalog, loadCommandCatalog, parseCommandInput } from "./commands.js";
+import { createPortfolioFS } from "./portfolio-fs.js";
 
 const promptForm = document.getElementById("terminalPrompt");
 const inputShell = document.getElementById("inputShell");
@@ -14,14 +15,16 @@ const typingMsPerChar = 22;
 const typingMinMs = 200;
 const typingMaxMs = 1400;
 const typingGapMs = 40;
+const redirectPromptMessage = "Hey! You are being redirected from LiminalWitch.CV. Continue?";
 let commandBuffer = "";
 let commandCatalog = defaultCommandCatalog;
-let currentPath = "/";
+const portfolioFs = createPortfolioFS();
 const commandHistory = [];
 let historyIndex = 0;
 let historyDraft = "";
 let renderQueue = Promise.resolve();
 let renderEpoch = 0;
+let activeRedirectPrompt = null;
 
 function syncPromptUI() {
     const visibleText = commandBuffer || placeholderText;
@@ -87,6 +90,126 @@ function enqueueLine(line, contentLength) {
     );
 }
 
+function getHostLabel(href) {
+    const normalizedHref = normalizeExternalHref(href);
+    try {
+        return new URL(normalizedHref).host;
+    } catch {
+        return normalizedHref;
+    }
+}
+
+function normalizeExternalHref(href) {
+    const rawHref = String(href ?? "").trim();
+    if (!rawHref) {
+        return "";
+    }
+
+    if (/^[a-z][a-z0-9+.-]*:/i.test(rawHref)) {
+        return rawHref;
+    }
+
+    return `https://${rawHref}`;
+}
+
+function showRedirectPrompt(href) {
+    return new Promise((resolve) => {
+        if (activeRedirectPrompt) {
+            activeRedirectPrompt.resolve(false);
+            activeRedirectPrompt.element.remove();
+            activeRedirectPrompt = null;
+        }
+
+        const toast = document.createElement("div");
+        toast.className = "redirectToast";
+        toast.setAttribute("role", "alertdialog");
+        toast.setAttribute("aria-live", "assertive");
+
+        const message = document.createElement("p");
+        message.className = "redirectToast__message";
+        message.textContent = redirectPromptMessage;
+
+        const destination = document.createElement("p");
+        destination.className = "redirectToast__destination";
+        destination.textContent = `Destination: ${getHostLabel(href)}`;
+
+        const actions = document.createElement("div");
+        actions.className = "redirectToast__actions";
+
+        const agreeButton = document.createElement("button");
+        agreeButton.type = "button";
+        agreeButton.className = "redirectToast__button";
+        agreeButton.textContent = "Agree";
+
+        const cancelButton = document.createElement("button");
+        cancelButton.type = "button";
+        cancelButton.className = "redirectToast__button redirectToast__button--subtle";
+        cancelButton.textContent = "Cancel";
+
+        const closePrompt = (approved) => {
+            if (!activeRedirectPrompt) {
+                return;
+            }
+            const { element, resolve: resolvePrompt } = activeRedirectPrompt;
+            activeRedirectPrompt = null;
+            element.classList.remove("is-visible");
+            window.setTimeout(() => element.remove(), 160);
+            resolvePrompt(approved);
+        };
+
+        agreeButton.addEventListener("click", () => closePrompt(true));
+        cancelButton.addEventListener("click", () => closePrompt(false));
+
+        actions.appendChild(agreeButton);
+        actions.appendChild(cancelButton);
+        toast.appendChild(message);
+        toast.appendChild(destination);
+        toast.appendChild(actions);
+
+        document.body.appendChild(toast);
+        window.requestAnimationFrame(() => toast.classList.add("is-visible"));
+        activeRedirectPrompt = { element: toast, resolve };
+    });
+}
+
+function easterEggToast(text = "Easter egg unlocked.") {
+    const toast = document.createElement("div");
+    toast.className = "redirectToast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+
+    const message = document.createElement("p");
+    message.className = "redirectToast__message";
+    message.textContent = text;
+
+    toast.appendChild(message);
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => toast.classList.add("is-visible"));
+    setTimeout(() => {
+        toast.classList.remove("is-visible");
+        setTimeout(() => toast.remove(), 160);
+    }, 2200);
+}
+
+
+async function openExternalWithPrompt(href) {
+    const normalizedHref = normalizeExternalHref(href);
+    if (!normalizedHref) {
+        writeLog("Invalid redirect target.");
+        return;
+    }
+
+    const approved = await showRedirectPrompt(normalizedHref);
+    if (!approved) {
+        writeLog("Redirect cancelled.");
+        return;
+    }
+
+    window.open(normalizedHref, "_blank", "noopener,noreferrer");
+    writeLog(`Redirecting to ${getHostLabel(normalizedHref)}...`);
+}
+
 function writeLog(text, className = "") {
     const line = document.createElement("p");
     line.className = className;
@@ -118,8 +241,7 @@ function writeRichLog(parts, className = "") {
             const token = document.createElement("a");
             token.className = "terminalToken terminalToken--link";
             token.href = part.href;
-            token.target = "_blank";
-            token.rel = "noopener noreferrer";
+            token.dataset.href = part.href;
             token.textContent = part.label ?? part.href;
             line.appendChild(token);
         }
@@ -128,21 +250,59 @@ function writeRichLog(parts, className = "") {
     enqueueLine(line, estimateRichLength(parts));
 }
 
+let activeToast = null;
+
+function showToast(text, durationMs = 1800) {
+    const messageText = String(text ?? "").trim();
+    if (!messageText) {
+        return;
+    }
+
+    if (activeToast) {
+        activeToast.remove();
+        activeToast = null;
+    }
+
+    const toast = document.createElement("div");
+    toast.className = "redirectToast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+
+    const message = document.createElement("p");
+    message.className = "redirectToast__message";
+    message.textContent = messageText;
+
+    toast.appendChild(message);
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => toast.classList.add("is-visible"));
+
+    window.setTimeout(() => {
+        toast.classList.remove("is-visible");
+        window.setTimeout(() => {
+            toast.remove();
+            if (activeToast === toast) {
+                activeToast = null;
+            }
+        }, 160);
+    }, durationMs);
+
+    activeToast = toast;
+}
+
 const commandHandlers = createCommandHandlers({
+    fs: portfolioFs,
     writeLog,
     writeRichLog,
+    showToast,
     clearLog: () => {
         renderEpoch += 1;
         renderQueue = Promise.resolve();
         log.textContent = "";
     },
     getCatalog: () => commandCatalog,
-    getCurrentPath: () => currentPath,
-    setCurrentPath: (path) => {
-        currentPath = path;
-    },
     openExternal: (href) => {
-        window.open(href, "_blank", "noopener,noreferrer");
+        openExternalWithPrompt(href);
     }
 });
 
@@ -260,6 +420,7 @@ function handleTyping(event) {
 }
 
 async function initializeTerminal() {
+    await portfolioFs.loadEntries();
     commandCatalog = await loadCommandCatalog();
 
     promptForm.addEventListener("click", () => {
@@ -284,6 +445,17 @@ async function initializeTerminal() {
     });
 
     log.addEventListener("click", (event) => {
+        const linkTarget = event.target.closest(".terminalToken--link");
+        if (linkTarget) {
+            event.preventDefault();
+            const href = linkTarget.dataset.href || linkTarget.getAttribute("href");
+            if (href) {
+                openExternalWithPrompt(href);
+            }
+            inputShell.focus();
+            return;
+        }
+
         const target = event.target.closest("[data-path]");
         if (!target) {
             return;

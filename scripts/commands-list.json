@@ -71,6 +71,18 @@
       "aliases": ["credit"],
       "usage": "credit",
       "description": "Run credit dev info."
+    },
+    {
+      "name": "ping",
+      "aliases": ["ping"],
+      "usage": "ping",
+      "description": "Run Ping Toast"    
+    },
+    {
+      "name": "on_the_rocks",
+      "aliases": ["on the rocks", "on_the_rocks"],
+      "usage": "on_the_rocks",
+      "description": "Stay Classy."
     }
     
   ]

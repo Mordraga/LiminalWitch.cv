@@ -1,153 +1,80 @@
-const KOFI_URL = "https://ko-fi.com/";
+const entriesUrl = new URL("./portfolio-entries.json", import.meta.url);
 
-const entries = [
+const fallbackEntries = [
     {
         path: "/",
         kind: "dir",
         description: "Root directory for the portfolio terminal.",
-        children: ["/about-vtubing", "/about-pro", "/projects", "/contact"]
-    },
-
-    //===== About Me =====
-    {
-        path: "/about-pro",
-        kind: "file",
-        description: "About me but make it professional. Bleh.",
-        lines: [
-            "Mordraga (alias)",
-            "Software Developer",
-            "Focus",
-            "AI Tooling, Automation Systems, Website Development",
-            "",
-            "Languages:",
-            "Rust, Python, JS/HTML/CSS"
-        ]
-    },
-    {
-        path: "/about-vtubing",
-        kind: "file",
-        description: "About me profile.",
-        lines: [
-            "Mordraga | Eldritch Horror Vtuber",
-            "Hello! I'm Mordraga or as some may know me, MRD-0. Your wonderful 'eldritch goddess' or whatever. I make",
-            "cool things like this webside, AI tools and other interesting things."
-        ]
-    },
-
-    // Intentionally hidden.
-    {
-        path: "/about-saryn",
-        kind: "file",
-        description: "Legal about me",
-        lines: [
-            "Hello! I am Saryn, the voice and creator of Mordraga, this site, and all of 'Mordraga's' little toys and",
-            "creations.",
-            "",
-            "Title:",
-            "Software Developer | Vtuber",
-            "Focus",
-            "AI Tooling, Automation Systems, Website Development",
-            "",
-            "Languages:",
-            "Rust, Python, JS/HTML/CSS",
-        ]
-    },
-    {
-        path: "/projects",
-        kind: "dir",
-        description: "Selected work and experiments.",
-        children: [
-            "/websites", 
-            "/ai-work", 
-            "/worldbuilding-notes"]
-    },
-
-    //===== Website stuff =====
-    {
-        path: "/websites",
-        kind: "dir",
-        description: "Selected websites to show",
-        children: [
-            "/websites/liminal-witch.cv", 
-            "/websites/mootskeeper.com"
-        ]
-    },
-    {
-        path: "/websites/liminal-witch.cv",
-        kind: "file",
-        description: "Terminal-first portfolio interface.",
-        lines: [
-            "Built as a static page terminal style portfolio to show off my latest projects! The site you are also",
-            "currently looking at. <3",
-            "Stack: vanilla JS modules, semantic HTML, custom CSS."
-        ]
-    },
-    {
-        path: "/websites/mootskeeper.com",
-        kind: "file",
-        description: "CRM website",
-        lines: [
-            "Built as a CRM management tool for 'moots', the app lets you register contacts inside of the tool",
-            "Pull your data from other devices using twitch and google oauth logins",
-            "And ensure you aren't drunk texting your friends at 4PM in the morning when it is 12 AM for them.",
-            "Stack: vanilla JS modules, semantic HTML, custom CSS, FastAPI, PostgreSQL"
-        ]
-    },
-    // ===== Worldbuilding =====
-    {
-        path: "/worldbuilding-notes",
-        kind: "file",
-        description: "Lore and writing sandbox.",
-        lines: [
-            "Couple of my current projects can fit under here such as my Vtubing itself being the biggest example.",
-            "But another example I can think of are 'Polaris', a speculative biology TTRPG with DND inspired mechanics",
-        ]
-    },
-    // ===== AI Stuf =====
-    {
-        path: "/ai-work",
-        kind: "dir",
-        description: "AI Tools and agents I have made.",
-        children: [
-            "/ai-work/Mai",
-            "/ai-work/Selyros"
-        ]
-    },
-    {
-        path: "/ai-work/Mai",
-        kind: "file",
-        description: "Flirt LLM running off of Python and Openrouter",
-        lines: [
-            "AI prompt system to generate flirty content for my Vtubing streams",
-            "Runs off of Openrouter for a modular model system controlled in a UI",
-            "Designed with twitch-safety in mind and user opt-in in mind.",
-            "",
-            "Stack:",
-            "Pure Python with mild JSON"
-        ]
-    },
-    {
-        path: "/ai-work/Selyros",
-        kind: "file",
-        description: "AI Model designed to operate around IFS systems",
-        lines: [
-            "AI prompt system designed around IFS parts theory to simulate multiple parts such as Managers, Firefighters and Exiles",
-            "Runs off of Gemma3 hosted locally via Ollama.",
-            "Designed with trauma awareness in mind",
-            "",
-            "Stack:",
-            "Pure Python with mild JSON"
-        ]
+        children: ["/contact"]
     },
     {
         path: "/contact",
         kind: "link",
         description: "Open Ko-fi DMs.",
-        url: KOFI_URL
+        url: "https://ko-fi.com/"
     }
 ];
 
-const entryByPath = new Map(entries.map((entry) => [entry.path, entry]));
+function isNonEmptyString(value) {
+    return typeof value === "string" && value.trim().length > 0;
+}
+
+function sanitizeEntry(rawEntry) {
+    if (!rawEntry || typeof rawEntry !== "object") {
+        return null;
+    }
+
+    const path = isNonEmptyString(rawEntry.path) ? rawEntry.path.trim() : "";
+    const kind = isNonEmptyString(rawEntry.kind) ? rawEntry.kind.trim() : "";
+    if (!path || !kind) {
+        return null;
+    }
+
+    const entry = {
+        path,
+        kind,
+        description: isNonEmptyString(rawEntry.description) ? rawEntry.description.trim() : ""
+    };
+
+    if (kind === "dir") {
+        entry.children = Array.isArray(rawEntry.children)
+            ? rawEntry.children.filter(isNonEmptyString).map((child) => child.trim())
+            : [];
+    }
+
+    if (kind === "file") {
+        entry.lines = Array.isArray(rawEntry.lines)
+            ? rawEntry.lines.map((line) => String(line ?? ""))
+            : [];
+    }
+
+    if (kind === "link") {
+        entry.url = isNonEmptyString(rawEntry.url) ? rawEntry.url.trim() : "";
+    }
+
+    return entry;
+}
+
+function sanitizeEntries(rawEntries) {
+    if (!Array.isArray(rawEntries)) {
+        return [];
+    }
+
+    const deduped = new Map();
+    for (const rawEntry of rawEntries) {
+        const entry = sanitizeEntry(rawEntry);
+        if (!entry) {
+            continue;
+        }
+        deduped.set(entry.path, entry);
+    }
+
+    return [...deduped.values()];
+}
+
+function buildEntryMap(entries) {
+    return new Map(entries.map((entry) => [entry.path, entry]));
+}
 
 function collapsePath(segments) {
     const stack = [];
@@ -163,21 +90,6 @@ function collapsePath(segments) {
     }
 
     return stack.length > 0 ? `/${stack.join("/")}` : "/";
-}
-
-export function normalizePathInput(rawPath, currentPath = "/") {
-    const input = String(rawPath ?? "").trim();
-    if (!input) {
-        return currentPath;
-    }
-
-    const basePath = input.startsWith("/") ? input : `${currentPath}/${input}`;
-    return collapsePath(basePath.split("/"));
-}
-
-export function resolveExistingPath(rawPath, currentPath = "/") {
-    const normalizedPath = normalizePathInput(rawPath, currentPath);
-    return entryByPath.has(normalizedPath) ? normalizedPath : null;
 }
 
 function getParentPath(path) {
@@ -205,64 +117,142 @@ function listAncestorPaths(path) {
     return ancestors;
 }
 
-export function resolvePathForCd(rawPath, currentPath = "/") {
-    const input = String(rawPath ?? "").trim();
-    if (!input) {
-        return "/";
+export class PortfolioFS {
+    constructor(options = {}) {
+        const { entries = fallbackEntries, currentPath = "/" } = options;
+        this.entries = [];
+        this.entryByPath = new Map();
+        this.currentPath = "/";
+        this.setEntries(entries);
+        this.setCurrentPath(currentPath);
     }
 
-    const resolvedHere = resolveExistingPath(input, currentPath);
-    if (resolvedHere) {
-        return resolvedHere;
-    }
+    setEntries(rawEntries) {
+        const sanitized = sanitizeEntries(rawEntries);
+        const entries = sanitized.length > 0 ? sanitized : sanitizeEntries(fallbackEntries);
+        this.entries = entries;
+        this.entryByPath = buildEntryMap(entries);
 
-    if (input.startsWith("/")) {
-        return null;
-    }
-
-    for (const ancestorPath of listAncestorPaths(currentPath)) {
-        const resolvedAtAncestor = resolveExistingPath(input, ancestorPath);
-        if (resolvedAtAncestor) {
-            return resolvedAtAncestor;
+        const currentEntry = this.getEntry(this.currentPath);
+        if (!currentEntry || currentEntry.kind !== "dir") {
+            this.currentPath = "/";
         }
     }
 
-    return null;
-}
+    async loadEntries() {
+        try {
+            const response = await fetch(entriesUrl);
+            if (!response.ok) {
+                return false;
+            }
 
-export function getEntry(path) {
-    return entryByPath.get(path) ?? null;
-}
+            const data = await response.json();
+            const rawEntries = Array.isArray(data) ? data : data?.entries;
+            const sanitized = sanitizeEntries(rawEntries);
+            if (sanitized.length === 0) {
+                return false;
+            }
 
-export function listChildren(path) {
-    const entry = getEntry(path);
-    if (!entry || entry.kind !== "dir") {
-        return [];
+            this.setEntries(sanitized);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
-    return (entry.children ?? [])
-        .map((childPath) => getEntry(childPath))
-        .filter(Boolean);
+    getCurrentPath() {
+        return this.currentPath;
+    }
+
+    setCurrentPath(path) {
+        const normalized = String(path ?? "").trim() || "/";
+        const entry = this.getEntry(normalized);
+        if (!entry || entry.kind !== "dir") {
+            return false;
+        }
+
+        this.currentPath = normalized;
+        return true;
+    }
+
+    normalizePathInput(rawPath, currentPath = this.currentPath) {
+        const input = String(rawPath ?? "").trim();
+        if (!input) {
+            return currentPath;
+        }
+
+        const basePath = input.startsWith("/") ? input : `${currentPath}/${input}`;
+        return collapsePath(basePath.split("/"));
+    }
+
+    resolveExistingPath(rawPath, currentPath = this.currentPath) {
+        const normalizedPath = this.normalizePathInput(rawPath, currentPath);
+        return this.entryByPath.has(normalizedPath) ? normalizedPath : null;
+    }
+
+    resolvePathForCd(rawPath, currentPath = this.currentPath) {
+        const input = String(rawPath ?? "").trim();
+        if (!input) {
+            return "/";
+        }
+
+        const resolvedHere = this.resolveExistingPath(input, currentPath);
+        if (resolvedHere) {
+            return resolvedHere;
+        }
+
+        if (input.startsWith("/")) {
+            return null;
+        }
+
+        for (const ancestorPath of listAncestorPaths(currentPath)) {
+            const resolvedAtAncestor = this.resolveExistingPath(input, ancestorPath);
+            if (resolvedAtAncestor) {
+                return resolvedAtAncestor;
+            }
+        }
+
+        return null;
+    }
+
+    getEntry(path) {
+        return this.entryByPath.get(path) ?? null;
+    }
+
+    listChildren(path) {
+        const entry = this.getEntry(path);
+        if (!entry || entry.kind !== "dir") {
+            return [];
+        }
+
+        return (entry.children ?? [])
+            .map((childPath) => this.getEntry(childPath))
+            .filter(Boolean);
+    }
+
+    formatPathLabel(path) {
+        if (path === "/") {
+            return "/";
+        }
+
+        const parts = path.split("/").filter(Boolean);
+        return parts[parts.length - 1] ?? path;
+    }
+
+    formatEntryLabel(entry) {
+        const base = this.formatPathLabel(entry.path);
+        if (entry.kind === "dir") {
+            return `${base}/`;
+        }
+
+        if (entry.kind === "link") {
+            return `${base}@`;
+        }
+
+        return base;
+    }
 }
 
-export function formatPathLabel(path) {
-    if (path === "/") {
-        return "/";
-    }
-
-    const parts = path.split("/").filter(Boolean);
-    return parts[parts.length - 1] ?? path;
-}
-
-export function formatEntryLabel(entry) {
-    const base = formatPathLabel(entry.path);
-    if (entry.kind === "dir") {
-        return `${base}/`;
-    }
-
-    if (entry.kind === "link") {
-        return `${base}@`;
-    }
-
-    return base;
+export function createPortfolioFS(options = {}) {
+    return new PortfolioFS(options);
 }
