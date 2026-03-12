@@ -341,6 +341,40 @@ function buildHandlerKeyCandidates(value) {
     ];
 }
 
+function normalizeHandlerKey(value) {
+    return String(value ?? "")
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, "_")
+        .replace(/\s+/g, "_")
+        .replace(/[^\w]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_|_$/g, "");
+}
+
+function findHandler(candidate) {
+    const direct = commandHandlers[candidate];
+    if (typeof direct === "function") {
+        return { handler: direct, key: candidate };
+    }
+
+    const normalizedCandidate = normalizeHandlerKey(candidate);
+    if (!normalizedCandidate) {
+        return null;
+    }
+
+    for (const [handlerKey, handler] of Object.entries(commandHandlers)) {
+        if (typeof handler !== "function") {
+            continue;
+        }
+        if (normalizeHandlerKey(handlerKey) === normalizedCandidate) {
+            return { handler, key: handlerKey };
+        }
+    }
+
+    return null;
+}
+
 function resolveHandler(command) {
     const keys = new Set();
 
@@ -355,9 +389,9 @@ function resolveHandler(command) {
     }
 
     for (const key of keys) {
-        const handler = commandHandlers[key];
-        if (typeof handler === "function") {
-            return { handler, key };
+        const found = findHandler(key);
+        if (found) {
+            return found;
         }
     }
 
@@ -391,6 +425,17 @@ function runCommand(raw) {
     const { command, args } = parsed;
     const resolvedHandler = resolveHandler(command);
     if (!resolvedHandler) {
+        console.warn("Command configured but not implemented", {
+            commandName: command.name,
+            aliases: command.aliases,
+            candidateKeys: [
+                ...new Set([
+                    ...buildHandlerKeyCandidates(command.name),
+                    ...(command.aliases ?? []).flatMap((alias) => buildHandlerKeyCandidates(alias))
+                ])
+            ],
+            availableHandlers: Object.keys(commandHandlers)
+        });
         writeLog(`Command '${command.name}' is configured but not implemented.`);
         trackEvent("command_unimplemented", { command: command.name });
         return;
