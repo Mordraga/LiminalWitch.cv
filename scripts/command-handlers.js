@@ -170,6 +170,10 @@ export function createCommandHandlers(context) {
         on_the_rocks() {
             context.writeLog("Stay Classy.")
             context.showToast("Stay Classy. 🍸")
+        },
+        what_say_you() {
+            context.writeLog("Hell is empty, and all the devils are here.")
+            context.showToast("Hell is empty, and all the devils are here.")
         }
 
     };
