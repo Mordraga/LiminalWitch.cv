@@ -79,6 +79,12 @@
       "description": "Run Ping Toast"    
     },
     {
+      "name": "pong",
+      "aliases": ["pong"],
+      "usage": "pong",
+      "description": "Run Pong Toast"
+    },
+    {
       "name": "on_the_rocks",
       "aliases": ["on the rocks", "on_the_rocks"],
       "usage": "on_the_rocks",

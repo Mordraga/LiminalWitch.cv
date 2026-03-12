@@ -163,6 +163,10 @@ export function createCommandHandlers(context) {
             context.writeLog("Pong. <3")
             context.showToast("Pong. <3")
         },
+        pong(){
+            context.writeLog("Ping. <3")
+            context.showToast("Ping. <3")
+        },
         on_the_rocks() {
             context.writeLog("Stay Classy.")
             context.showToast("Stay Classy. 🍸")

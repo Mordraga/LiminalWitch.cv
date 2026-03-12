@@ -173,23 +173,7 @@ function showRedirectPrompt(href) {
 }
 
 function easterEggToast(text = "Easter egg unlocked.") {
-    const toast = document.createElement("div");
-    toast.className = "redirectToast";
-    toast.setAttribute("role", "status");
-    toast.setAttribute("aria-live", "polite");
-
-    const message = document.createElement("p");
-    message.className = "redirectToast__message";
-    message.textContent = text;
-
-    toast.appendChild(message);
-    document.body.appendChild(toast);
-
-    requestAnimationFrame(() => toast.classList.add("is-visible"));
-    setTimeout(() => {
-        toast.classList.remove("is-visible");
-        setTimeout(() => toast.remove(), 160);
-    }, 2200);
+    showToast(text, 2200);
 }
 
 
@@ -250,7 +234,18 @@ function writeRichLog(parts, className = "") {
     enqueueLine(line, estimateRichLength(parts));
 }
 
-let activeToast = null;
+function getToastStack() {
+    let stack = document.getElementById("toastStack");
+    if (stack) {
+        return stack;
+    }
+
+    stack = document.createElement("div");
+    stack.id = "toastStack";
+    stack.className = "toastStack";
+    document.body.appendChild(stack);
+    return stack;
+}
 
 function showToast(text, durationMs = 1800) {
     const messageText = String(text ?? "").trim();
@@ -258,36 +253,24 @@ function showToast(text, durationMs = 1800) {
         return;
     }
 
-    if (activeToast) {
-        activeToast.remove();
-        activeToast = null;
-    }
-
     const toast = document.createElement("div");
-    toast.className = "redirectToast";
+    toast.className = "commandToast";
     toast.setAttribute("role", "status");
     toast.setAttribute("aria-live", "polite");
 
     const message = document.createElement("p");
-    message.className = "redirectToast__message";
+    message.className = "commandToast__message";
     message.textContent = messageText;
 
     toast.appendChild(message);
-    document.body.appendChild(toast);
+    getToastStack().appendChild(toast);
 
     requestAnimationFrame(() => toast.classList.add("is-visible"));
 
     window.setTimeout(() => {
         toast.classList.remove("is-visible");
-        window.setTimeout(() => {
-            toast.remove();
-            if (activeToast === toast) {
-                activeToast = null;
-            }
-        }, 160);
+        window.setTimeout(() => toast.remove(), 160);
     }, durationMs);
-
-    activeToast = toast;
 }
 
 const commandHandlers = createCommandHandlers({
