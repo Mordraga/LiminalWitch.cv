@@ -263,6 +263,18 @@ codeblock:hover {
     text-shadow: 0 0 1px var(--accent);
 }
 
+.keyboardCapture {
+    position: fixed;
+    left: -10000px;
+    top: -10000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    border: 0;
+    padding: 0;
+}
+
 .promptText {
     color: var(--main-color);
     white-space: pre;

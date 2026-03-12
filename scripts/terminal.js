@@ -4,6 +4,7 @@ import { createPortfolioFS } from "./portfolio-fs.js";
 
 const promptForm = document.getElementById("terminalPrompt");
 const inputShell = document.getElementById("inputShell");
+const keyboardCapture = document.getElementById("keyboardCapture");
 const promptText = document.getElementById("promptText");
 const log = document.getElementById("terminalLog");
 const commandTokens = document.querySelectorAll("codeblock[data-command]");
@@ -26,12 +27,43 @@ let renderQueue = Promise.resolve();
 let renderEpoch = 0;
 let activeRedirectPrompt = null;
 
+function trackEvent(eventName, data = {}) {
+    const tracker = window?.umami;
+    if (!tracker || typeof tracker.track !== "function") {
+        return;
+    }
+
+    try {
+        tracker.track(eventName, data);
+    } catch {
+        // Ignore analytics failures so UX never breaks.
+    }
+}
+
 function syncPromptUI() {
     const visibleText = commandBuffer || placeholderText;
     const chars = Math.min(maxChars, Math.max(minChars, visibleText.length + 1));
     inputShell.style.width = `${chars}ch`;
     promptText.textContent = visibleText;
     promptText.classList.toggle("promptText--placeholder", commandBuffer.length === 0);
+}
+
+function appendCommandText(text) {
+    const value = String(text ?? "");
+    if (!value) {
+        return;
+    }
+
+    historyIndex = commandHistory.length;
+    historyDraft = "";
+    commandBuffer += value;
+    syncPromptUI();
+}
+
+function clearKeyboardCaptureValue() {
+    if (keyboardCapture) {
+        keyboardCapture.value = "";
+    }
 }
 
 function clampNumber(value, min, max) {
@@ -177,21 +209,26 @@ function easterEggToast(text = "Easter egg unlocked.") {
 }
 
 
-async function openExternalWithPrompt(href) {
+async function openExternalWithPrompt(href, source = "unknown") {
     const normalizedHref = normalizeExternalHref(href);
     if (!normalizedHref) {
         writeLog("Invalid redirect target.");
         return;
     }
 
+    const destination = getHostLabel(normalizedHref);
+    trackEvent("redirect_prompted", { destination, source });
+
     const approved = await showRedirectPrompt(normalizedHref);
     if (!approved) {
         writeLog("Redirect cancelled.");
+        trackEvent("redirect_cancelled", { destination, source });
         return;
     }
 
     window.open(normalizedHref, "_blank", "noopener,noreferrer");
-    writeLog(`Redirecting to ${getHostLabel(normalizedHref)}...`);
+    writeLog(`Redirecting to ${destination}...`);
+    trackEvent("redirect_confirmed", { destination, source });
 }
 
 function writeLog(text, className = "") {
@@ -252,6 +289,7 @@ function showToast(text, durationMs = 1800) {
     if (!messageText) {
         return;
     }
+    trackEvent("toast_shown");
 
     const toast = document.createElement("div");
     toast.className = "commandToast";
@@ -285,7 +323,7 @@ const commandHandlers = createCommandHandlers({
     },
     getCatalog: () => commandCatalog,
     openExternal: (href) => {
-        openExternalWithPrompt(href);
+        openExternalWithPrompt(href, "command");
     }
 });
 
@@ -300,6 +338,7 @@ function runCommand(raw) {
     const parsed = parseCommandInput(trimmedInput, commandCatalog);
     if (!parsed) {
         writeLog(`Unknown command: ${trimmedInput.toLowerCase()}. Type 'help'.`);
+        trackEvent("command_unknown", { input: trimmedInput.split(/\s+/)[0]?.toLowerCase() || "unknown" });
         return;
     }
 
@@ -307,9 +346,11 @@ function runCommand(raw) {
     const handler = commandHandlers[command.name];
     if (!handler) {
         writeLog(`Command '${command.name}' is configured but not implemented.`);
+        trackEvent("command_unimplemented", { command: command.name });
         return;
     }
 
+    trackEvent("command_run", { command: command.name });
     handler(args);
 }
 
@@ -324,9 +365,24 @@ function submitBuffer() {
 
     runCommand(commandBuffer);
     commandBuffer = "";
+    clearKeyboardCaptureValue();
     historyIndex = commandHistory.length;
     historyDraft = "";
     syncPromptUI();
+}
+
+function handleKeyboardInput() {
+    if (!keyboardCapture) {
+        return;
+    }
+
+    const typedText = keyboardCapture.value;
+    if (!typedText) {
+        return;
+    }
+
+    appendCommandText(typedText.replace(/[\r\n]+/g, " "));
+    clearKeyboardCaptureValue();
 }
 
 function handleTyping(event) {
@@ -378,6 +434,7 @@ function handleTyping(event) {
         historyIndex = commandHistory.length;
         historyDraft = "";
         commandBuffer = commandBuffer.slice(0, -1);
+        clearKeyboardCaptureValue();
         syncPromptUI();
         return;
     }
@@ -387,6 +444,7 @@ function handleTyping(event) {
         historyIndex = commandHistory.length;
         historyDraft = "";
         commandBuffer = "";
+        clearKeyboardCaptureValue();
         syncPromptUI();
         return;
     }
@@ -396,10 +454,7 @@ function handleTyping(event) {
     }
 
     event.preventDefault();
-    historyIndex = commandHistory.length;
-    historyDraft = "";
-    commandBuffer += event.key;
-    syncPromptUI();
+    appendCommandText(event.key);
 }
 
 async function initializeTerminal() {
@@ -407,24 +462,22 @@ async function initializeTerminal() {
     commandCatalog = await loadCommandCatalog();
 
     promptForm.addEventListener("click", () => {
-        promptText.textContent = "";
-        inputShell.focus();
+        keyboardCapture?.focus();
     });
 
-    inputShell.addEventListener("keydown", handleTyping);
-    inputShell.addEventListener("focus", () => inputShell.classList.add("is-focused"));
-    inputShell.addEventListener("blur", () => inputShell.classList.remove("is-focused"));
+    keyboardCapture?.addEventListener("keydown", handleTyping);
+    keyboardCapture?.addEventListener("input", handleKeyboardInput);
+    keyboardCapture?.addEventListener("focus", () => inputShell.classList.add("is-focused"));
+    keyboardCapture?.addEventListener("blur", () => inputShell.classList.remove("is-focused"));
 
-    inputShell.addEventListener("paste", (event) => {
+    keyboardCapture?.addEventListener("paste", (event) => {
         const pastedText = event.clipboardData?.getData("text") ?? "";
         if (!pastedText) {
             return;
         }
         event.preventDefault();
-        historyIndex = commandHistory.length;
-        historyDraft = "";
-        commandBuffer += pastedText.replace(/[\r\n]+/g, " ");
-        syncPromptUI();
+        appendCommandText(pastedText.replace(/[\r\n]+/g, " "));
+        clearKeyboardCaptureValue();
     });
 
     log.addEventListener("click", (event) => {
@@ -433,9 +486,9 @@ async function initializeTerminal() {
             event.preventDefault();
             const href = linkTarget.dataset.href || linkTarget.getAttribute("href");
             if (href) {
-                openExternalWithPrompt(href);
+                openExternalWithPrompt(href, "link_token");
             }
-            inputShell.focus();
+            keyboardCapture?.focus();
             return;
         }
 
@@ -451,19 +504,20 @@ async function initializeTerminal() {
         }
 
         runCommand(`open ${path}`);
-        inputShell.focus();
+        keyboardCapture?.focus();
     });
 
     for (const token of commandTokens) {
         token.addEventListener("click", () => {
             commandBuffer = token.dataset.command || "";
+            clearKeyboardCaptureValue();
             syncPromptUI();
-            inputShell.focus();
+            keyboardCapture?.focus();
         });
     }
 
     syncPromptUI();
-    inputShell.focus();
+    keyboardCapture?.focus();
 }
 
 initializeTerminal();
