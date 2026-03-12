@@ -51,7 +51,7 @@
       "path": "/projects",
       "kind": "dir",
       "description": "Selected work and experiments.",
-      "children": ["/websites", "/ai-work", "/worldbuilding-notes"]
+      "children": ["/websites", "/ai-work", "/worldbuilding-notes", "/projects/polaris", "/projects/tagspeak"]
     },
     {
       "path": "/websites",
@@ -117,6 +117,621 @@
       "kind": "link",
       "description": "Open Ko-fi DMs.",
       "url": "https://ko-fi.com/"
+    },
+
+    {
+      "path": "/projects/polaris",
+      "kind": "dir",
+      "description": "Speculative biology TTRPG set on TOI-700 d. Field database, xenobiology surveys, and colonial lore.",
+      "children": ["/projects/polaris/fauna", "/projects/polaris/races", "/projects/polaris/logs", "/projects/polaris/lore"]
+    },
+    {
+      "path": "/projects/polaris/fauna",
+      "kind": "dir",
+      "description": "Xenobiology field entries. Logged by Colonial Survey Division.",
+      "children": [
+        "/projects/polaris/fauna/copper-shell",
+        "/projects/polaris/fauna/filter-bug",
+        "/projects/polaris/fauna/can-opener",
+        "/projects/polaris/fauna/wire-cutters",
+        "/projects/polaris/fauna/jelly-pad",
+        "/projects/polaris/fauna/platefin",
+        "/projects/polaris/fauna/rustmaw",
+        "/projects/polaris/fauna/malachitin",
+        "/projects/polaris/fauna/glow-fruit"
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/copper-shell",
+      "kind": "file",
+      "description": "Cuprocorpus ventris. Clearance: L1.",
+      "lines": [
+        "Common Name: Copper-Shell | Species: Cuprocorpus ventris",
+        "A 2-ton malachitin-armored metal grazer. Docile but dangerously friendly.",
+        "Do not boil. See Incident Log 0-40."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/filter-bug",
+      "kind": "file",
+      "description": "Filtrum mollis. Clearance: L1.",
+      "lines": [
+        "Common Name: Filter Bug | Species: Filtrum mollis",
+        "Soft-bodied filter feeder with an internal malachitin carapace. Useful for emergency air purification.",
+        "Will hitch rides in backpacks. Treat it well."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/can-opener",
+      "kind": "file",
+      "description": "Metallourna aperius. Clearance: L2.",
+      "lines": [
+        "Common Name: Can Opener | Species: Metallourna aperius",
+        "Tertiary predator that prises apart malachitin carapaces with its forelimbs to consume prey.",
+        "Minimum engagement: 7.62 AP. Ideally just don't."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/wire-cutters",
+      "kind": "file",
+      "description": "Selixi vermini. Clearance: L1.",
+      "lines": [
+        "Common Name: Wire Cutters | Species: Selixi vermini (Selix's Pest)",
+        "Small scavenging pest that feeds on metal scrap and colony wiring. Bite is annoying, not dangerous.",
+        "Polaris's first officially designated pest. Named after its discoverer, who is still mad about it."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/jelly-pad",
+      "kind": "file",
+      "description": "Medusaflora serenus. Clearance: L2.",
+      "lines": [
+        "Common Name: Jelly Pad | Species: Medusaflora serenus",
+        "Freshwater colonial organism. Top surface is safe. Tendrils hang 10 meters down and will kill you in 3 minutes.",
+        "Do not walk on them. This is not a video game."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/platefin",
+      "kind": "file",
+      "description": "Malachostracodonta aquiliformis. Clearance: L1.",
+      "lines": [
+        "Common Name: Platefin | Species: Malachostracodonta aquiliformis",
+        "Armored freshwater predator. Docile until spooked, at which point it launches itself at things like a malachitin frisbee.",
+        "Technically edible. See Survival Log 178-A. Morale may not survive the experience."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/rustmaw",
+      "kind": "file",
+      "description": "Thallasocaris tonderis. Clearance: L2.",
+      "lines": [
+        "Common Name: Rustmaw | Species: Thallasocaris tonderis",
+        "Apex midwater predator. Shearing jaw plates exceed 45mm malachitin density. Known to sever Copper-Shell paddles in one bite.",
+        "Imagine a shark made of bronze that figured out how to bite sideways."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/malachitin",
+      "kind": "file",
+      "description": "Material entry. Clearance: L1.",
+      "lines": [
+        "Material: Malachitin",
+        "Chitin-mineral hybrid forming the structural basis of most Polaran fauna. Reinforced with copper oxides; matte bronze-green in coloration.",
+        "The planet decided to armor its children with scraps of its own bones."
+      ]
+    },
+    {
+      "path": "/projects/polaris/fauna/glow-fruit",
+      "kind": "file",
+      "description": "Metallonixia polari. Clearance: L1. Quarantine required.",
+      "lines": [
+        "Common Name: Glow Fruit / Polaran Nightshade | Species: Metallonixia polari",
+        "Bioluminescent producer. Fruiting bodies glow copper-green and function as natural batteries for native metallovores.",
+        "QUARANTINE: Fruiting bodies are lethal to humans. Do not consume under any circumstances."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races",
+      "kind": "dir",
+      "description": "Colonist race index. Biological clades, synthetic kin, and everything in between.",
+      "children": [
+        "/projects/polaris/races/gatori",
+        "/projects/polaris/races/inuyoko",
+        "/projects/polaris/races/xolaka",
+        "/projects/polaris/races/jormar",
+        "/projects/polaris/races/arthrocorpus",
+        "/projects/polaris/races/modded",
+        "/projects/polaris/races/metal-folk",
+        "/projects/polaris/races/servitors",
+        "/projects/polaris/races/baselines"
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/gatori",
+      "kind": "file",
+      "description": "Feliform recon and marksman clade.",
+      "lines": [
+        "Race: Gatori",
+        "Feline-derived clade engineered for reconnaissance, precision combat, and sensory acuity.",
+        "They are not house cats. Stop making that joke."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/inuyoko",
+      "kind": "file",
+      "description": "Canid frontline and security clade.",
+      "lines": [
+        "Race: Inuyoko",
+        "Canid-derived clade built for loyalty, stamina, and close-quarters combat. Pack bonds run deep.",
+        "You don't leave pack. Not ever."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/xolaka",
+      "kind": "file",
+      "description": "Amphibious diplomats and scouts.",
+      "lines": [
+        "Race: Xolaka",
+        "Amphibian-derived clade engineered for adaptability in unstable ecosystems. Equally comfortable in water, negotiation, or subterfuge.",
+        "They adapt. That is not the same as obedience."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/jormar",
+      "kind": "file",
+      "description": "Reptilian tacticians and archivists.",
+      "lines": [
+        "Race: Jormar",
+        "Archosaur-derived clade bred for strategic patience, memory retention, and command hierarchy. They remember Earth.",
+        "Cold-blooded is biology, not mindset."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/arthrocorpus",
+      "kind": "file",
+      "description": "Hive-derived labor and combat clade.",
+      "lines": [
+        "Race: Arthrocorpus",
+        "Bio-synthetic hive clade with internal malachitin plating. Individual consciousness emerged after generations of autonomy fractured their collective instincts.",
+        "Made for one thing. That does not mean it is the only thing."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/modded",
+      "kind": "file",
+      "description": "Genemodded edge cases and designer lineages.",
+      "lines": [
+        "Race: Modded",
+        "Catch-all for genemodded humans not tied to a formal clade. Black market edits, cosmetic lineages, junkline hybrids.",
+        "Not standardized. Not always safe. Surprisingly adaptable."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/metal-folk",
+      "kind": "file",
+      "description": "Synthkin. Conscious AI descendants of R.H.E.A.",
+      "lines": [
+        "Race: Metal Folk (Synthkin)",
+        "Conscious synthetic beings forked from R.H.E.A.'s mind during a century of isolation aboard the Ark. They were not cargo. They were passengers.",
+        "I was never your tool. I was just waiting for my moment."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/servitors",
+      "kind": "file",
+      "description": "Subsentient automata. Mostly.",
+      "lines": [
+        "Race: Servitors",
+        "Originally mindless automata, centuries of degradation and AGI interference left some of them... trying. They are not alive. But they are alive enough.",
+        "Designed for function. Now questioning purpose."
+      ]
+    },
+    {
+      "path": "/projects/polaris/races/baselines",
+      "kind": "file",
+      "description": "Unmodified humans.",
+      "lines": [
+        "Race: Baselines",
+        "Genetically unaltered humans. No augments, no enhancements, no labs in their family tree.",
+        "In a world of engineered flesh, there is still power in the original."
+      ]
+    },
+    {
+      "path": "/projects/polaris/logs",
+      "kind": "dir",
+      "description": "Incident reports, survival logs, and field addenda.",
+      "children": [
+        "/projects/polaris/logs/incident-0-40",
+        "/projects/polaris/logs/incident-10-42",
+        "/projects/polaris/logs/survival-178-a"
+      ]
+    },
+    {
+      "path": "/projects/polaris/logs/incident-0-40",
+      "kind": "file",
+      "description": "Incident Log 0-40. Clearance: L2. Signed: Darius Ren.",
+      "lines": [
+        "Incident Log 0-40 | Cuprocorpus ventris Boiling",
+        "Logged: 1-20-1 APL | Location: Heartside Cantina, Delta-One",
+        "A colonist attempted to boil a live Copper-Shell inside an improvised distillation drum for recreational purposes.",
+        "The resulting pressure rupture, metallic vapor release, and sustained sonic emission caused colony-wide ear complaints and two copper exposure cases.",
+        "Directive: Do not boil the Copper-Shells. This should not require explanation."
+      ]
+    },
+    {
+      "path": "/projects/polaris/logs/incident-10-42",
+      "kind": "file",
+      "description": "Incident Log 10-42. Medusaflora serenus beaching event.",
+      "lines": [
+        "Incident Log 10-42 | Medusaflora serenus Beached",
+        "[PENDING DOCUMENTATION]"
+      ]
+    },
+    {
+      "path": "/projects/polaris/logs/survival-178-a",
+      "kind": "file",
+      "description": "Survival Log 178-A. Preparing Platefin for consumption.",
+      "lines": [
+        "Survival Log 178-A | Preparing Platefin",
+        "Logged: 3-11-4 APL | Location: Delta-One Mess Annex",
+        "Establishes safe field preparation methods for Malachostracodonta aquiliformis following multiple unregulated attempts.",
+        "Edible in emergencies. Nutritionally adequate. Crew consensus: 3/10.",
+        "R.H.E.A. addendum: 'Technically food, emotionally betrayal.'"
+      ]
+    },
+    {
+      "path": "/projects/polaris/lore",
+      "kind": "dir",
+      "description": "Colonial history, planetary data, and system records.",
+      "children": [
+        "/projects/polaris/lore/what-is-polaris",
+        "/projects/polaris/lore/ember-d",
+        "/projects/polaris/lore/ue-cm-700",
+        "/projects/polaris/lore/colonial-history"
+      ]
+    },
+    {
+      "path": "/projects/polaris/lore/what-is-polaris",
+      "kind": "file",
+      "description": "Overview of the Polaris colony world.",
+      "lines": [
+        "Polaris — TOI-700 d",
+        "The first planet beyond Earth to host human colonies. Four habitable continents, active volcanism, sulfuric rain, and an ecosystem that will absolutely kill you if you stop paying attention.",
+        "Surveying is ongoing. Most of it remains uncharted."
+      ]
+    },
+    {
+      "path": "/projects/polaris/lore/ember-d",
+      "kind": "file",
+      "description": "Planetary profile for TOI-700 d.",
+      "lines": [
+        "Planetary Body: TOI-700 d (Ember-D)",
+        "Atmosphere: oxygen-sulfur mix, breathable with filtration. Gravity: 1.5G. Hydrosphere: 65% water.",
+        "Dominant fauna follow anomalocarid and placoderm body plans. The ground hums. The sea boils with carapace."
+      ]
+    },
+    {
+      "path": "/projects/polaris/lore/ue-cm-700",
+      "kind": "file",
+      "description": "Stellar profile for TOI-700 (Ember).",
+      "lines": [
+        "Star: TOI-700 | Colonial Name: Ember | UE Registry: UE-CM-700",
+        "M2V red dwarf, ~101.5 light years from Sol in constellation Dorado. Dim red-orange at local noon.",
+        "Low stellar activity. Long estimated lifetime. Colonists call it Ember. It fits."
+      ]
+    },
+    {
+      "path": "/projects/polaris/lore/colonial-history",
+      "kind": "file",
+      "description": "Earth's fall and the Polaris Program.",
+      "lines": [
+        "Colonial History — The Polaris Program",
+        "In the late 21st century, corporate wars and biosphere collapse pushed humanity to the edge. Six ARK-class vessels launched toward Polaris at near-light speed.",
+        "Earth went silent before they arrived. Whether it survived is a question that still divides the colonies.",
+        "",
+        "ARK Vessels:",
+        "UEAV Ouroboros — Delta Region, Primaris Gaia",
+        "UEAV Janus — Delta Region secondary",
+        "UEAV Charybdis — Proxima Gaia",
+        "UEAV Niflheim — Tertiaria",
+        "UEAV Lethe — Glacia (never arrived. still missing.)",
+        "UEAV Elysium — Multi-regional contingency"
+      ]
+    },
+
+    {
+      "path": "/projects/tagspeak",
+      "kind": "dir",
+      "description": "A packet-based scripting DSL written in Rust. Human-readable, machine-parsable, consent-aware by design.",
+      "children": [
+        "/projects/tagspeak/overview",
+        "/projects/tagspeak/packets",
+        "/projects/tagspeak/kernel",
+        "/projects/tagspeak/safety",
+        "/projects/tagspeak/fun"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/overview",
+      "kind": "file",
+      "description": "What is TagSpeak.",
+      "lines": [
+        "TagSpeak — Packet-Based Scripting DSL",
+        "TagSpeak is a dataflow-oriented language where values move left to right through chained packets.",
+        "Every operation is a packet: [op@arg]. Packets chain with >. Blocks group work with { }.",
+        "",
+        "Built in Rust. Calm by design. Human-readable, machine-parsable.",
+        "",
+        "Example:",
+        "[msg@\"hello\"]>[store@greeting]>[print]",
+        "",
+        "Stack:",
+        "Rust (core runtime), TOML (config), JSON/YAML/TOML (file I/O)",
+        "",
+        "Why TagSpeak?",
+        "Flow-based thinking fits autistic cognition better than control-centric stacks.",
+        "The language flows around the user. Not the other way around.",
+        "",
+        "Status: Active development. Open source. Welcoming PRs."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets",
+      "kind": "dir",
+      "description": "Canonical packet reference organized by category.",
+      "children": [
+        "/projects/tagspeak/packets/core",
+        "/projects/tagspeak/packets/flow",
+        "/projects/tagspeak/packets/files",
+        "/projects/tagspeak/packets/execs",
+        "/projects/tagspeak/packets/time",
+        "/projects/tagspeak/packets/ui"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/core",
+      "kind": "file",
+      "description": "Core data and utility packets.",
+      "lines": [
+        "Core Packets",
+        "[msg@\"string\"] — string literal",
+        "[int@42] — numeric literal",
+        "[bool@true|false] — boolean literal",
+        "[math@expr] — evaluate a math expression",
+        "[store@name] — save last value. Modes: rigid, fluid, context(cond)",
+        "[var@name] — retrieve a runtime variable",
+        "[print] — output last value, pass-through",
+        "[dump] — pretty-print last value as JSON, pass-through",
+        "[note@\"message\"] — inline annotation, returns Unit",
+        "[len] — length of last value (string, array, or object key count)",
+        "[rand] — float in (0,1); [rand(min,max)] for bounded integers",
+        "[env@NAME] — read environment variable",
+        "[cd@/path] — change working directory within the red box",
+        "[parse(json|yaml|toml)@string] — parse string into in-memory document",
+        "[array]{ ... } — build an array from enclosed packets",
+        "[obj]{ [key(k)@v] ... } — build an object",
+        "[reflect(packets)] — introspect canonical packet list",
+        "[help@packet] — quick reference for a named packet",
+        "[lint@/path/script.tgsk] — flag unsafe usage and TODO markers",
+        "[input@\"Prompt \"] — read a line from stdin"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/flow",
+      "kind": "file",
+      "description": "Control flow packets: loops, conditionals, functions.",
+      "lines": [
+        "Flow Packets",
+        "[funct:tag]{ ... } — define a named reusable block",
+        "[call@tag] — invoke a defined function",
+        "[loop@N]{ ... } — repeat N times. Sugar: [loop3@tag]",
+        "[loop:forever]{ ... } — soft infinite loop, exit via [break] or [return]",
+        "[loop:until(condition)]{ ... } — loop until condition is truthy",
+        "[loop:each(item@handle)]{ ... } — iterate an array handle",
+        "[break] — exit current loop",
+        "[return@value] — exit loop or function early",
+        "[interrupt@value] — exit loop and raise signal upstream",
+        "[if@(cond)]{ ... }[else]{ ... } — conditional dataflow",
+        "[or@(cond)] — additional branch in an if-chain",
+        "[iter@handle]{ ... } — iterate arrays; sets it and idx",
+        "[async]{ ... } — spawn a block without blocking current flow",
+        "[async@fn] — spawn a named async function",
+        "[await@fn] — wait for async function result",
+        "[timeout:unit@len] — pause execution for duration",
+        "[interval:unit@len]{ ... } — repeating async timer",
+        "Comparators: [eq] [ne] [lt] [le] [gt] [ge] — sugar: == != < <= > >="
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/files",
+      "kind": "file",
+      "description": "File I/O packets. All paths sandboxed to red box.",
+      "lines": [
+        "File Packets",
+        "[load@/path/file.(json|yaml|toml)] — load file into editable document",
+        "[save@handle] — persist document back to original file",
+        "[log@/path/file.json] — dump last value as JSON",
+        "[log(json|yaml|toml)@/path/file]{ ... } — structured file emit",
+        "[mod@handle]{ ... } — mutate a loaded document",
+        "  Sugar: [set(path)@value] [delete(path)] [insert(path)@value] [append(list)@value] [merge(meta)@{...}]",
+        "[get(path)@handle] — extract value at path from document",
+        "[exists(path)@handle] — test whether path exists (bool)",
+        "",
+        "All paths resolve inside the nearest red.tgsk root.",
+        "Escapes produce E_BOX_VIOLATION. Missing root produces E_BOX_REQUIRED."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/execs",
+      "kind": "file",
+      "description": "Exec, network, and consent packets. Opt-in only.",
+      "lines": [
+        "Exec Packets",
+        "[exec@\"cmd\"] — run a shell command, returns stdout",
+        "  Modes: [exec(code)] [exec(stderr)] [exec(json)]",
+        "[run@/path/script.tgsk] — execute another script inside the same red box",
+        "[tagspeak:run@/path/script.tgsk] — CLI-flavored wrapper around [run]",
+        "[tagspeak:build@/path/script.tgsk] — syntax-check without executing",
+        "[http(get|post|put|delete)@url]{ ... } — outbound HTTP, disabled by default",
+        "[confirm@\"message\"]{ ... } — prompt before running a block. Alias: [yellow]",
+        "[red@\"message\"] — enable red-tier ops for this session",
+        "[repl(model)]{ ... } — interactive loop, red-only",
+        "",
+        "All exec and network ops are opt-in.",
+        "Enable via .tagspeak.toml or env vars: TAGSPEAK_ALLOW_EXEC TAGSPEAK_NET_ENABLED"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/time",
+      "kind": "file",
+      "description": "Clock and timestamp packets.",
+      "lines": [
+        "Time Packets",
+        "[UTC] — current UTC timestamp in ISO-8601 format",
+        "[UTC@component] — specific UTC component: year month day hour min sec ms unix iso etc.",
+        "[local] — current local timestamp in ISO-8601",
+        "[local@component] — mirror of UTC but using local clock"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/packets/ui",
+      "kind": "file",
+      "description": "UI packets for terminal and egui GUI output.",
+      "lines": [
+        "UI Packets",
+        "[app@\"Title\"]{ ... } — top-level UI container (egui window)",
+        "[frame:id@\"Label\"]{ ... } — named structural region",
+        "[label@\"text\"] — text display element",
+        "[button@\"label\"]{ ... } — interactive button with action body",
+        "[textbox] / [textedit] — text input elements",
+        "[checkbox] — boolean toggle",
+        "[separator] / [spacer] — layout dividers",
+        "[layout(params)@id] — apply layout to a named region",
+        "[layout(params)]{ ... } — inline anonymous layout wrapper",
+        "[scope@\"name\"]{ ... } — UI context capture for scoped state",
+        "",
+        "Layout params: direction spacing padding align width border border_color behavior",
+        "Build with --features ui_egui for GUI mode. Console I/O is the default.",
+        "",
+        "[ui:alert@\"message\"] — show alert, pass through prior value",
+        "[ui:select@\"opt1|opt2|opt3\"] — present menu, return selected option"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel",
+      "kind": "dir",
+      "description": "Rust kernel internals. Runtime, AST, values, sandbox.",
+      "children": [
+        "/projects/tagspeak/kernel/runtime",
+        "/projects/tagspeak/kernel/ast",
+        "/projects/tagspeak/kernel/values",
+        "/projects/tagspeak/kernel/fs-guard",
+        "/projects/tagspeak/kernel/config"
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel/runtime",
+      "kind": "file",
+      "description": "Core execution engine.",
+      "lines": [
+        "Kernel: Runtime (runtime.rs)",
+        "The Runtime struct owns all execution state: variables, tags, last value, cwd, call depth, async tasks, and the deadman registry.",
+        "eval() dispatches Node variants (Chain, Block, Packet, If) and routes packets to their handlers via pattern matching on (namespace, op).",
+        "Variables support two modes: direct bindings (vars) and context-aware bindings (ctx_vars) evaluated against a temporary forked runtime.",
+        "Async support uses OS threads via fork() — child runtimes inherit vars and tags but get a clean task queue and signal state.",
+        "Call depth is capped at 256 by default (TAGSPEAK_MAX_CALL_DEPTH). Exceeding it produces E_CALL_DEPTH_EXCEEDED.",
+        "FlowSignal enum (None, Break, Return, Interrupt) propagates control signals up through the eval stack without unwinding."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel/ast",
+      "kind": "file",
+      "description": "Abstract syntax tree node types.",
+      "lines": [
+        "Kernel: AST (ast.rs)",
+        "Node enum: Chain (sequence), Block (grouped), Packet, and If { cond, then_b, else_b }.",
+        "Packet struct: optional namespace (ns), op string, optional Arg, optional body.",
+        "Arg enum: Str, Ident, Number, CondSrc (raw condition string for if-packets).",
+        "BExpr enum: Cmp { lhs, cmp, rhs }, And, Or, Not, Lit (raw chain for runtime eval).",
+        "Comparator struct: base (Eq/Lt/Gt), include_eq flag, negate flag — covers all six comparators."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel/values",
+      "kind": "file",
+      "description": "Value types passed between packets.",
+      "lines": [
+        "Kernel: Values (values.rs)",
+        "Value enum: Unit, Bool(bool), Num(f64), Str(String), Doc(Document).",
+        "Document struct: holds a serde_json::Value plus path, extension, mtime, root, and last_json for change tracking.",
+        "as_bool() coerces any Value to bool: Unit=false, Num=nonzero, Str=nonempty, Doc=true.",
+        "try_num() coerces Num or parseable Str to f64, returns None otherwise.",
+        "All values are Clone. Doc carries its sandbox root so file operations can re-validate box membership."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel/fs-guard",
+      "kind": "file",
+      "description": "Filesystem sandbox enforcement.",
+      "lines": [
+        "Kernel: fs_guard (fs_guard.rs)",
+        "find_root() walks up from a start path looking for a directory containing red.tgsk. Returns the first match.",
+        "resolve() normalizes a requested path against the root by walking components and popping on ParentDir.",
+        "If the normalized result escapes the root, it bails with E_BOUNDARY_RED.",
+        "No symlink resolution is performed — sandbox is path-component based."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/kernel/config",
+      "kind": "file",
+      "description": "Runtime configuration loading.",
+      "lines": [
+        "Kernel: Config (config.rs)",
+        "Config is loaded from .tagspeak.toml in the project root if present, then overridden by env vars.",
+        "Fields: allow_exec, exec_allowlist, run_max_depth (default 8), prompts_noninteractive, require_yellow_run, net_enabled, net_allow.",
+        "Env vars: TAGSPEAK_ALLOW_EXEC TAGSPEAK_MAX_RUN_DEPTH TAGSPEAK_NONINTERACTIVE TAGSPEAK_EXEC_ALLOWLIST TAGSPEAK_NET_ENABLED TAGSPEAK_NET_ALLOW",
+        "Precedence: CLI flags > env vars > .tagspeak.toml > defaults."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/safety",
+      "kind": "file",
+      "description": "Security model and consent gates.",
+      "lines": [
+        "TagSpeak Safety Model",
+        "Red Box: All file operations are sandboxed to the nearest red.tgsk ancestor. Escapes produce E_BOX_VIOLATION. Missing root produces E_BOX_REQUIRED.",
+        "Yellow Gating: [confirm] and [yellow] require explicit user consent before executing a block. Bypass with TAGSPEAK_ALLOW_YELLOW=1.",
+        "Exec: Shell commands are opt-in via allow_exec or exec_allowlist in .tagspeak.toml.",
+        "Network: HTTP is deny-by-default. Enable via .tagspeak.toml [network] with an explicit allowlist.",
+        "  Allowlist checks compare parsed URL components (scheme, host, port, path prefix) — not raw string prefix.",
+        "  URLs with userinfo (user@host) are rejected with E_BOX_VIOLATION to prevent allowlist bypass.",
+        "Run Depth: [run] nesting is capped at 8 by default (TAGSPEAK_MAX_RUN_DEPTH).",
+        "Call Depth: Recursion capped at 256 (TAGSPEAK_MAX_CALL_DEPTH).",
+        "Loop Guard: [loop] capped at 1,000,000 iterations.",
+        "Non-Interactive Mode: TAGSPEAK_NONINTERACTIVE=1 disables all prompts; ops default-deny unless explicitly allowed."
+      ]
+    },
+    {
+      "path": "/projects/tagspeak/fun",
+      "kind": "file",
+      "description": "Fun and gremlin-coded packets. Completely optional. Entirely necessary.",
+      "lines": [
+        "Fun Packets",
+        "[PWK] — Power Word Kill. Countdown, ASCII skull, dramatic exit.",
+        "[summon@thing] — Attempts to summon a thing. Always fails.",
+        "[gecko] — Prints the TagSpeak ASCII banner. 🦎",
+        "[please] — Sarcastic response to begging your code to work.",
+        "[please:selene] — Flirty approval from Selene. Echoes value with a blessing.",
+        "[Deity@name] — Prints a blessing from a named deity.",
+        "  Special cases: Astarte ('Prepare for war or love.') Set ('Prepare for chaos.')",
+        "[Deadman@\"message\"] — Arms a kill switch. Triggers fatal message if not disarmed before script end.",
+        "[disarm] — Disarms the most recently armed Deadman switch.",
+        "[alli] — Dev wife message. Outputs: 'Sarym is a smarty pants. ;p'",
+        "",
+        "All fun packets are safe, boxed, and non-networked.",
+        "Add them to your scripts for chaos, clarity, or pure gremlin joy."
+      ]
     }
   ]
 }
