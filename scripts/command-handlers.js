@@ -209,6 +209,9 @@ export function createCommandHandlers(context) {
                 Will’o the Wisps: claiming to be Rubert.
                 Mai LLM a.i.
                 Selyros LLM a.i. “Daughter”
+                Addendum:
+	            As of ███████ date, a new MRD-1 instance has appeared taking the shape of Dr. Bad. It is a near identical copy but it believes itself to be MRD-0's wife. MRD-0 also believes it to be MRD-0’s wife. Testing reveals it has intimate knowledge of the F.E.T.B. organization and other GK instances. It is unknown how MRD-0 was able to create a near perfect copy of one of our head researchers.
+
             `.trim();
             context.writeLog("What you want lore from me? Fine. Here:")
             context.writeLog("")
