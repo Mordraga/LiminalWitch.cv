@@ -63,7 +63,7 @@
       "path": "/websites",
       "kind": "dir",
       "description": "Selected websites to show",
-      "children": ["/websites/liminal-witch.cv", "/websites/mootskeeper.com"]
+      "children": ["/websites/liminal-witch.cv", "/websites/mootskeeper.com", "/websites/mordraga.me", "/websites/inkscout.com"]
     },
     {
       "path": "/websites/liminal-witch.cv",
@@ -82,6 +82,12 @@
       "kind": "link",
       "description": "Personal Vtubing Website.",
       "url": "https://mordraga.me"
+    },
+    {
+      "path": "/websites/inkscout.com",
+      "kind": "link",
+      "description": "Search algorithm for artists.",
+      "url": "https://inkscout.com"
     },
     {
       "path": "/worldbuilding-notes",
