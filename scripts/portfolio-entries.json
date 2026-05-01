@@ -78,6 +78,12 @@
       "url": "https://mootskeeper.com"
     },
     {
+      "path": "/websites/mordraga.me",
+      "kind": "link",
+      "description": "Personal Vtubing Website.",
+      "url": "https://mordraga.me"
+    },
+    {
       "path": "/worldbuilding-notes",
       "kind": "file",
       "description": "Lore and writing sandbox.",
